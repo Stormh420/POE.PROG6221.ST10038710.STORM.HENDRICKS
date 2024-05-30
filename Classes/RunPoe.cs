@@ -1,17 +1,15 @@
-﻿using POE.PROG6221.Classes;
-using System;
-
+﻿using System;
+using System.Collections.Generic;
 
 namespace POE.PROG6221
 {
-    //Main class
     internal class RunPoe
     {
-        //Main method
-       static void Main(string[] args)
+        static void Main()
         {
-            Start.StartMessage();
-            
+            List<AddRecipe> recipes = new List<AddRecipe>();
+            Start.StartMessage(recipes);
         }
     }
 }
+

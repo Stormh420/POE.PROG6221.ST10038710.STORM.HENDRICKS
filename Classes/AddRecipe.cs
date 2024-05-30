@@ -1,75 +1,103 @@
-﻿using POE.PROG6221.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POE.PROG6221
 {
-    //class the handles the adding a recipe 
     public class AddRecipe
     {
         // Attributes for AddRecipe class
-        public static string RecipeName { get; set; } // Recipe name
-        public static int NumIngredients { get; set; } // Number of ingredients
-        public static string[] IngredientNames { get; set; } // Array to store ingredient names
-        public static int[] IngredientQuantities { get; set; } // Array to store ingredient quantities
-        public static string[] IngredientUnits { get; set; } // Array to store ingredient units
+        public string RecipeName { get; set; } // Recipe name
+        public int NumIngredients { get; set; } // Number of ingredients
+        public string[] IngredientNames { get; set; } // Array to store ingredient names
+        public int[] IngredientQuantities { get; set; } // Array to store ingredient quantities
+        public string[] IngredientUnits { get; set; } // Array to store ingredient units
+        public int[] IngredientCalories { get; set; } // Array to store ingredient calories
+        public string[] IngredientFoodGroups { get; set; } // Array to store ingredient food groups
+        public int NumSteps { get; set; } // Number of steps
+        public string[] DescriptionStep { get; set; } // Array to store step description
+        public int TotalCalories { get; set; } // Total calories of the recipe
 
-        public static int NumSteps { get; set; }//Number of steps
-        public static string[] DescriptionStep { get; set; }//Array to store step description
-
-        // Method that starts the process of adding a recipe
-        public static void StartAddRecipe()
+        // Method that starts the process of adding recipes
+        public static void StartAddRecipe(List<AddRecipe> recipes)
         {
-            Console.WriteLine("Enter details for the recipe:");
+            // Prompt user to enter how many recipes they want to add
+            Console.Write("Enter the number of recipes you want to add: ");
+            int numRecipes = Convert.ToInt32(Console.ReadLine());
 
-            // Prompt the user for the recipe name
-            Console.Write("Recipe Name: ");
-            RecipeName = Console.ReadLine();
-
-            // Prompt the user for the number of ingredients
-            Console.Write("Number of Ingredients: ");
-            NumIngredients = Convert.ToInt32(Console.ReadLine());
-
-            // Initialize arrays to store ingredient details
-            IngredientNames = new string[NumIngredients];
-            IngredientQuantities = new int[NumIngredients];
-            IngredientUnits = new string[NumIngredients];
-
-            // Loop to input details for each ingredient
-            for (int i = 0; i < NumIngredients; i++)
+            for (int r = 0; r < numRecipes; r++)
             {
-                Console.WriteLine($"\nEnter details for Ingredient {i + 1}:");
-                Console.Write("Name: ");
-                IngredientNames[i] = Console.ReadLine();
+                Console.WriteLine($"\nAdding Recipe {r + 1}:");
+                AddRecipe recipe = new AddRecipe();
 
-                Console.Write("Quantity: ");
-                IngredientQuantities[i] = Convert.ToInt32(Console.ReadLine());
+                // Prompt the user for the recipe name
+                Console.Write("Recipe Name: ");
+                recipe.RecipeName = Console.ReadLine();
 
-                Console.Write("Unit: ");
-                IngredientUnits[i] = Console.ReadLine();
+                // Prompt the user for the number of ingredients
+                Console.Write("Number of Ingredients: ");
+                recipe.NumIngredients = Convert.ToInt32(Console.ReadLine());
+
+                // Initialize arrays to store ingredient details
+                recipe.IngredientNames = new string[recipe.NumIngredients];
+                recipe.IngredientQuantities = new int[recipe.NumIngredients];
+                recipe.IngredientUnits = new string[recipe.NumIngredients];
+                recipe.IngredientCalories = new int[recipe.NumIngredients];
+                recipe.IngredientFoodGroups = new string[recipe.NumIngredients];
+
+                // Loop to input details for each ingredient
+                for (int i = 0; i < recipe.NumIngredients; i++)
+                {
+                    Console.WriteLine($"\nEnter details for Ingredient {i + 1}:");
+                    Console.Write("Name: ");
+                    recipe.IngredientNames[i] = Console.ReadLine();
+
+                    Console.Write("Quantity: ");
+                    recipe.IngredientQuantities[i] = Convert.ToInt32(Console.ReadLine());
+
+                    Console.Write("Unit: ");
+                    recipe.IngredientUnits[i] = Console.ReadLine();
+
+                    Console.Write("Calories: ");
+                    recipe.IngredientCalories[i] = Convert.ToInt32(Console.ReadLine());
+
+                    Console.Write("Food Group: ");
+                    recipe.IngredientFoodGroups[i] = Console.ReadLine();
+                }
+
+                // Calculate total calories
+                recipe.TotalCalories = recipe.IngredientCalories.Sum();
+
+                // Notify if total calories exceed 300
+                if (recipe.TotalCalories > 300)
+                {
+                    Console.WriteLine("Warning: The total calories of this recipe exceed 300!");
+                }
+
+                // Prompt the user for the number of steps
+                Console.Write("Number of Steps: ");
+                recipe.NumSteps = Convert.ToInt32(Console.ReadLine());
+
+                // Initialize array to store step details
+                recipe.DescriptionStep = new string[recipe.NumSteps];
+
+                // Loop to input steps
+                for (int i = 0; i < recipe.NumSteps; i++)
+                {
+                    Console.WriteLine($"\nStep {i + 1}:");
+                    recipe.DescriptionStep[i] = Console.ReadLine();
+                }
+
+                // Store the recipe in the list
+                recipes.Add(recipe);
             }
 
-            // Prompt the user for the number of steps
-            Console.Write("Number of Steps: "); // Fixed prompt message
-            NumSteps = Convert.ToInt32(Console.ReadLine());
-
-            // Initialize array to store step details
-            DescriptionStep = new string[NumSteps];
-
-            // Loop to input steps
-            for (int i = 0; i < NumSteps; i++)
-            {
-                Console.WriteLine($"\n Step {i + 1}:");
-                DescriptionStep[i] = Console.ReadLine();
-            }
-
-            //Call start method so user can choose to view the recipe
-            Start.StartMessage();
-
-
+            // Takes user back to main menu
+            Start.StartMessage(recipes);
         }
     }
 }
+
+
+
+

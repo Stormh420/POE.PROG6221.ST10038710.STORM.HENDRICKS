@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POE.PROG6221.Classes
 {
-    //Class that Scales the ingredients quantities
+    // Class that scales the ingredients quantities
     internal class ScaleRecipe
     {
-        //Method that Scales the ingredients quantities
-        public static void ScaleQuantities(int numIngredients)
+        // Method that scales the ingredients quantities
+        public static void ScaleQuantities(AddRecipe recipe)
         {
             // Store the original quantities before scaling
-            int[] originalQuantities = new int[numIngredients];
-            Array.Copy(AddRecipe.IngredientQuantities, originalQuantities, numIngredients);
+            int[] originalQuantities = new int[recipe.NumIngredients];
+            Array.Copy(recipe.IngredientQuantities, originalQuantities, recipe.NumIngredients);
 
             Console.WriteLine("Choose a scaling factor:");
             Console.WriteLine("1. 0.5");
@@ -43,15 +40,15 @@ namespace POE.PROG6221.Classes
             }
 
             // Scale each ingredient quantity
-            for (int i = 0; i < numIngredients; i++)
+            for (int i = 0; i < recipe.NumIngredients; i++)
             {
-                AddRecipe.IngredientQuantities[i] = (int)(AddRecipe.IngredientQuantities[i] * scaleFactor);
+                recipe.IngredientQuantities[i] = (int)(recipe.IngredientQuantities[i] * scaleFactor);
             }
 
             Console.WriteLine($"Quantities scaled by a factor of {scaleFactor}");
 
             // Display the recipe with scaled quantities
-            DisplayRecipe.Display();
+            DisplayRecipe.Display(new List<AddRecipe> { recipe });
 
             // Ask the user if they want to keep the scaled quantities or revert them back
             Console.WriteLine("Do you want to keep the scaled quantities? (Y/N)");
@@ -59,15 +56,16 @@ namespace POE.PROG6221.Classes
             if (userInput.ToUpper() != "Y")
             {
                 // Revert back to the original quantities
-                for (int i = 0; i < numIngredients; i++)
+                for (int i = 0; i < recipe.NumIngredients; i++)
                 {
-                    AddRecipe.IngredientQuantities[i] = originalQuantities[i];
+                    recipe.IngredientQuantities[i] = originalQuantities[i];
                 }
                 Console.WriteLine("Quantities reverted back to their original values.");
                 // Display the recipe with reverted quantities
-                DisplayRecipe.Display();
+                DisplayRecipe.Display(new List<AddRecipe> { recipe });
             }
         }
     }
 }
+
 
