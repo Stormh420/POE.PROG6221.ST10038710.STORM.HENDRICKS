@@ -46,6 +46,7 @@
     <Compile Include="Classes\AddRecipe.cs" />
     <Compile Include="Classes\ClearRecipe.cs" />
     <Compile Include="Classes\DisplayRecipe.cs" />
+    <Compile Include="Classes\MakeMenu.cs" />
     <Compile Include="Classes\RunPoe.cs" />
     <Compile Include="Classes\ScaleRecipe.cs" />
     <Compile Include="Classes\Start.cs" />

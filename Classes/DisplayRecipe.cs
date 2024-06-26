@@ -1,10 +1,11 @@
-﻿using System;
+﻿using POE.PROG6221.POE.PROG6221;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace POE.PROG6221.Classes
 {
-    // Class that displays the recipe
+    // Class that displays all the recipes
     internal class DisplayRecipe
     {
         // Method to display recipe details

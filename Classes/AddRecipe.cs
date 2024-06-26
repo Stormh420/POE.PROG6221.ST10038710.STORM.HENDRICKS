@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POE.PROG6221.POE.PROG6221;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,6 +18,16 @@ namespace POE.PROG6221
         public int NumSteps { get; set; } // Number of steps
         public string[] DescriptionStep { get; set; } // Array to store step description
         public int TotalCalories { get; set; } // Total calories of the recipe
+
+        // Main food groups
+        private static readonly string[] FoodGroups = new string[]
+        {
+            "Fruits",
+            "Vegetables",
+            "Grains",
+            "Protein Foods",
+            "Dairy"
+        };
 
         // Method that starts the process of adding recipes
         public static void StartAddRecipe(List<AddRecipe> recipes)
@@ -61,8 +72,30 @@ namespace POE.PROG6221
                     Console.Write("Calories: ");
                     recipe.IngredientCalories[i] = Convert.ToInt32(Console.ReadLine());
 
-                    Console.Write("Food Group: ");
-                    recipe.IngredientFoodGroups[i] = Console.ReadLine();
+                    // Loop until a valid food group is selected
+                    bool validChoice = false;
+                    while (!validChoice)
+                    {
+                        // Display food group options
+                        Console.WriteLine("Food Group Options:");
+                        for (int j = 0; j < FoodGroups.Length; j++)
+                        {
+                            Console.WriteLine($"{j + 1}. {FoodGroups[j]}");
+                        }
+
+                        Console.Write("Select Food Group (enter the number): ");
+                        int foodGroupChoice = Convert.ToInt32(Console.ReadLine()) - 1;
+
+                        if (foodGroupChoice >= 0 && foodGroupChoice < FoodGroups.Length)
+                        {
+                            recipe.IngredientFoodGroups[i] = FoodGroups[foodGroupChoice];
+                            validChoice = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid choice. Please select a valid food group.");
+                        }
+                    }
                 }
 
                 // Calculate total calories
@@ -97,6 +130,9 @@ namespace POE.PROG6221
         }
     }
 }
+
+
+
 
 
 
